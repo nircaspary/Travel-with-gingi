@@ -1,0 +1,29 @@
+.forms-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+}
+.steps {
+  height: 50px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  & > .step-number-circle {
+    display: grid;
+    place-content: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: rgb(164, 164, 164);
+    color: white;
+    &.active {
+      background-color: green;
+    }
+  }
+  & > .step-number-separator {
+    width: 40px;
+    height: 1px;
+  }
+}

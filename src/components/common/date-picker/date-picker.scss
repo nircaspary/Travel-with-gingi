@@ -1,0 +1,14 @@
+.date-picker {
+  border-bottom: 1px solid gray;
+  visibility: hidden;
+  position: absolute;
+  height: 0;
+  right: 160px;
+  bottom: 0;
+  &::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+
+  text-align: center;
+}

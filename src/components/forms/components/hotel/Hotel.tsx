@@ -6,7 +6,7 @@ import Checkbox from '../../../common/checkbox/Checkbox';
 import { observer } from 'mobx-react-lite';
 
 const Hotel = observer(() => {
-  const { setHotel, setIsNoHotel, city, hotel } = formSubmitionStore;
+  const { setHotel, setIsNoHotel, city, hotel, isNoHotel } = formSubmitionStore;
   const bounds = getBounds(city);
 
   const options = { componentRestrictions: { country: 'ro' }, types: ['address'], strictBounds: true, bounds };
@@ -32,7 +32,7 @@ const Hotel = observer(() => {
             <FaBed />
           </i>
         </div>
-        <Checkbox setter={setIsNoHotel} label='עדיין לא סגרתי מלון' />
+        <Checkbox setter={setIsNoHotel} boolean={isNoHotel} label='עדיין לא סגרתי מלון' />
       </div>
     </>
   );

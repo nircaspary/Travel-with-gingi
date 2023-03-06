@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { makeAutoObservable, toJS } from 'mobx';
-import { ICity, locations } from '../data/locations';
+import { ICity, cities } from '../data/locations';
 import { stringToDate } from '../utils/date';
 
 class FormSubmitionStore {
-  city: ICity = locations[0];
+  city: ICity = cities[0];
   arrival: Date = new Date(Date.now());
   departure: Date = new Date(Date.now());
   hotel: { lat: number; lng: number; name: string } = { lat: 0, lng: 0, name: '' };

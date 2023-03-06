@@ -8,7 +8,7 @@ export interface ICity {
   radius: number;
 }
 
-export const locations: ICity[] = [
+export const cities: ICity[] = [
   {
     text: 'בוקרשט',
     value: 'bucharest',

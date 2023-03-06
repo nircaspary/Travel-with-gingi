@@ -1,10 +1,17 @@
 import React from 'react';
 import './checkbox.scss';
-const Checkbox: React.FC<{ label: string; setter: (boolean: boolean) => void }> = ({ label, setter }) => {
+import { AiOutlineCheck } from 'react-icons/ai';
+const Checkbox: React.FC<{ label: string; setter: (boolean: boolean) => void; boolean: boolean }> = ({
+  label,
+  setter,
+  boolean,
+}) => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', width: '80%', gap: 20 }}>
+    <div className='checkbox-container'>
       <p>{label}</p>
-      <input type='checkbox' className='checkbox' onChange={(e) => setter(e.target.checked)} />
+      <div className={`checkbox ${boolean ? 'checked' : ''}`} onClick={() => setter(!boolean)}>
+        {boolean && <AiOutlineCheck />}
+      </div>
     </div>
   );
 };

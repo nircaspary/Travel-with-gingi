@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from '../../../common/dropdown/Dropdown';
-import { locations } from '../../../../data/locations';
+import { cities } from '../../../../data/locations';
 import DatePicker from '../../../common/date-picker/DatePicker';
 import { FaPlaneArrival, FaPlaneDeparture } from 'react-icons/fa';
 import { MdLocationPin } from 'react-icons/md';
@@ -10,10 +10,10 @@ import { observer } from 'mobx-react-lite';
 
 const Dates = observer(() => {
   const { setDeparture, setArrival, setCity, departure, arrival, city } = formSubmitionStore;
-  
+
   return (
     <div className='form'>
-      <Dropdown label='עיר' options={locations} icon={<MdLocationPin />} setter={setCity} selectedOption={city} />
+      <Dropdown label='עיר' options={cities} icon={<MdLocationPin />} setter={setCity} selectedOption={city} />
       <DatePicker
         label='תאריך הגעה'
         icon={<FaPlaneArrival />}

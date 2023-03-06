@@ -1,7 +1,17 @@
-.checkbox {
-  height: 16px;
-  width: 16px;
-  border-radius: 20px;
-  clip-path: circle(56% at 50% 50%);
-  border: 10px solid black;
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 90%;
+  gap: 20px;
+  & > .checkbox {
+    height: 18px;
+    width: 18px;
+    border-radius: 3px;
+    border: 1px solid black;
+    &.checked {
+      color: white;
+      background-color: green;
+    }
+  }
 }

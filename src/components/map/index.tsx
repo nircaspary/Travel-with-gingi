@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Coordinates, Trip } from '../../types/types';
 import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api';
 import './map.scss';
+import { IoMdArrowDown, IoMdArrowDropdown } from 'react-icons/io';
 const centerPoint = (points: (Coordinates | undefined)[] | undefined) => {
   let latSum = 0;
   let lngSum = 0;
@@ -17,10 +18,34 @@ const centerPoint = (points: (Coordinates | undefined)[] | undefined) => {
     return { lat: latSum, lng: lngSum };
   }
 };
+
+function useDelayUnmount(isMounted: boolean, delayTime: number) {
+  const [showDiv, setShowDiv] = useState(false);
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (isMounted && !showDiv) {
+      setShowDiv(true);
+    } else if (!isMounted && showDiv) {
+      timeoutId = setTimeout(() => setShowDiv(false), delayTime); //delay our unmount
+    }
+    return () => clearTimeout(timeoutId); // cleanup mechanism for effects , the use of setTimeout generate a sideEffect
+  }, [isMounted, delayTime, showDiv]);
+  return showDiv;
+}
+
+const mountedStyle = { animation: 'inAnimation 250ms ease-in' };
+const unmountedStyle = {
+  animation: 'outAnimation 270ms ease-out',
+  animationFillMode: 'forwards',
+};
+
 const Map = () => {
   const params = useParams();
   const [currentDayNumber, setCurrentDayNumber] = useState<number>(0);
   const [trip, setTrip] = useState<Trip | undefined>();
+
+  const [isMounted, setIsMounted] = useState(false);
+  const showDiv = useDelayUnmount(isMounted, 250);
 
   useEffect(() => {
     (async () => {
@@ -56,7 +81,8 @@ const Map = () => {
           next
         </button>
       </div>
-      <LoadScript googleMapsApiKey='AIzaSyAs_AiOKFwbmjBIhgnW3fPw5a3IqEUvxj8'>
+      <div className='map' style={{ backgroundColor: '#a0a9' }}></div>
+      {/* <LoadScript googleMapsApiKey='AIzaSyAs_AiOKFwbmjBIhgnW3fPw5a3IqEUvxj8'>
         <GoogleMap
           options={{ gestureHandling: 'none', disableDefaultUI: true }}
           clickableIcons={false}
@@ -66,12 +92,35 @@ const Map = () => {
           {trip?.routes &&
             routeByDay?.places.map((place, i) => (
               <Marker
+                key={i}
                 label={(i + 1).toString()}
                 position={{ lat: place.coordinates?.lat || 0, lng: place.coordinates?.lng || 0 }}
               />
             ))}
         </GoogleMap>
-      </LoadScript>
+      </LoadScript> */}
+      <div className='trip-details'>
+        <div className='trip-details-header'></div>
+        <div className='trip-details-container'>
+          {trip?.routes &&
+            routeByDay?.places.map((place, i) => (
+              <div className='trip-detail-container'>
+                <div className='trip-detail' key={i} onClick={() => setIsMounted((prev) => !prev)}>
+                  <p>{place.name_he}</p>
+                  <div className='trip-detail-time'>
+                    <p>13:30</p>
+                    <IoMdArrowDown color='green' />
+                  </div>
+                </div>
+                {showDiv && (
+                  <div style={isMounted ? mountedStyle : unmountedStyle} className='trip-extended-details'>
+                    {place.description_he}
+                  </div>
+                )}
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
